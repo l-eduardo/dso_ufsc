@@ -11,7 +11,7 @@ class Funcionario:
         self.__telefone = telefone
 
     @property
-    def cargo(self):
+    def cargo(self) -> str:
         return self.__cargo
 
     @cargo.setter
