@@ -3,10 +3,10 @@ from abc import ABC, abstractmethod, abstractproperty
 
 class Crud(ABC):
     @abstractmethod
-    def __init__(self, T, nome_chave_primaria):
+    def __init__(self, T, nome_cp):
         self.__lista = []
         self.__t = T
-        self.__nome_cp = nome_chave_primaria
+        self.__nome_cp = nome_cp
 
     @property
     def lista(self):
