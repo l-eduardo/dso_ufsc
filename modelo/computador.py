@@ -1,5 +1,5 @@
 import datetime
-from ClassesAbstratas.dispositivo import Dispositivo
+from abs.dispositivo import Dispositivo
 
 
 class Computador(Dispositivo):
