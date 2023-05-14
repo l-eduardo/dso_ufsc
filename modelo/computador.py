@@ -1,6 +1,6 @@
 import datetime
 from ClassesAbstratas.dispositivo import Dispositivo
- 
+
 
 class Computador(Dispositivo):
     def __init__(self,
