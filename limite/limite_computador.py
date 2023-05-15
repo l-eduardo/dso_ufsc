@@ -49,3 +49,13 @@ class LimiteComputador:
 
     def mostra_mensagem(self, msg):
         print(msg)
+
+    def valida_entrada(self, opt):
+        try:
+            opt = int(opt)
+            if opt < 0 or opt > 4:
+                raise ValueError("Opcao invalida")
+            return opt
+        except Exception as e:
+            print(e)
+            self.tela_opcoes()

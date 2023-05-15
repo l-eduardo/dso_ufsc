@@ -3,9 +3,11 @@ from limite.limite_funcionario import LimiteFuncionario
 
 
 class ControladorFuncionario:
-    def __init__ (self):
+    def __init__ (self, controlador_sistema):
         self.__funcionarios = []
         self.__limite_funcionario = LimiteFuncionario()
+        self.__controlador_sistema = controlador_sistema
+
 
     def verif_cpf_unico_valido(self, cpf: str):             
         if len(cpf) != 11:
@@ -123,6 +125,3 @@ class ControladorFuncionario:
                   6: self.retorna}
         opcoes[self.__limite_funcionario.mostra_tela_opcoes()]()
 
-
-cf = ControladorFuncionario()
-cf.abre_tela()

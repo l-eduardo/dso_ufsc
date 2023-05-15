@@ -2,9 +2,11 @@ from modelo.departamento import Departamento
 from limite.limite_departamento import LimiteDepartamento
 
 class ControladorDepartamento:
-    def __init__ (self):
+    def __init__ (self, controlador_sistema):
         self.__departamentos = []
         self.__limite_departamento = LimiteDepartamento()
+        self.__controlador_sistema = controlador_sistema
+
 
     def valida_codigo(self, codigo: str):
         for departamento in self.__departamentos:
@@ -146,6 +148,3 @@ class ControladorDepartamento:
                   12: self.retorna}
         opcoes[self.__limite_departamento.mostra_tela_opcoes(opcoes)]()
         pass
-
-cd = ControladorDepartamento()
-cd.abre_tela()

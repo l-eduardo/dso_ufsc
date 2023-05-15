@@ -5,11 +5,12 @@ from datetime import date
 
 
 class ControladorEmprestimo:
-    def __init__(self):
+    def __init__(self, controlador_sistema):
         self.__limite_emprestimo = LimiteEmprestimo()
         self.__emprestimos = []
         self.__proximo_id = 1
-        
+        self.__controlador_sistema = controlador_sistema
+
 
     def inclui(self, dispositivos: list, funcionario: Funcionario):
         atributos = {"dispositivos": dispositivos, "funcionario": funcionario, "data_inicio": date}

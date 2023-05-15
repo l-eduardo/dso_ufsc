@@ -1,13 +1,14 @@
-from abs.crud import Crud
+from controlador.abs.crud import Crud
 from modelo.computador import Computador
 from limite.limite_computador import LimiteComputador
 
 
 class ControladorComputadores(Crud):
-    def __init__(self):
+    def __init__(self, controlador_sistema):
         super().__init__(T=Computador, nome_cp="patrimonio")
-        self.__limiteComputador = LimiteComputador() 
-    
+        self.__limiteComputador = LimiteComputador()
+        self.__controlador_sistema = controlador_sistema
+
     def lista(self):
         self.__limiteComputador.exibe_computadores(super().lista)
 
@@ -70,4 +71,4 @@ class ControladorComputadores(Crud):
             lista_opt[self.__limiteComputador.tela_opcoes()]()
 
     def retorna(self):
-        pass
+        self.__controlador_sistema.abre_tela()
