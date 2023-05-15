@@ -16,16 +16,11 @@ class Computador(Dispositivo):
                  fim_garantia: str
                  ):
         super().__init__(patrimonio, marca, modelo, tipo, serial_number)
-        if(isinstance(processador, str)):
-            self.__processador = processador
-        if(isinstance(memoria_ram, str)):
-            self.__memoria_ram = memoria_ram
-        if(isinstance(armazenamento, str)):
-            self.__armazenamento = armazenamento
-        if(isinstance(so, str)):
-            self.__so = so
-        if(isinstance(fim_garantia, str)):
-            self.__fim_garantia = fim_garantia
+        self.__processador = processador
+        self.__memoria_ram = memoria_ram
+        self.__armazenamento = armazenamento
+        self.__so = so
+        self.__fim_garantia = fim_garantia
 
     @property
     def processador(self):
@@ -62,13 +57,18 @@ class Computador(Dispositivo):
     def fim_garantia(self):
         return self.__fim_garantia
 
-    def adiciona_armazenamento(self, armazenamento):
-        if(isinstance(armazenamento, float)):
-            self.__armazenamento.append(armazenamento)
+    @fim_garantia.setter
+    def fim_garantia(self, nova_fim_garantia):
+        if(isinstance(nova_fim_garantia, str)):
+            self.__fim_garantia = nova_fim_garantia
 
-    def remove_armazenamento(self, posicao):
-        if(isinstance(posicao, int)):
-            self.__armazenamento.pop(posicao)
+    @property
+    def armazenamento(self):
+        return sum(self.__armazenamento)
+
+    @armazenamento.getter
+    def armazenamento(self):
+        return self.__armazenamento
 
     def esta_na_garantia(self):
         hoje = datetime.datetime.today()
