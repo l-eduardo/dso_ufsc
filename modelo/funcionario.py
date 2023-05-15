@@ -10,6 +10,10 @@ class Funcionario:
         self.__nome = nome
         self.__telefone = telefone
 
+    def __str__(self):
+        return f"{self.__cpf} | {self.__nome} | {self.__email} | {self.__telefone} | {self.__cargo} | {self.__endereco}"
+
+
     @property
     def cargo(self) -> str:
         return self.__cargo

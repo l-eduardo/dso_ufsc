@@ -2,11 +2,15 @@ from modelo.funcionario import Funcionario
 
 
 class Departamento:
-    def __init__(self, codigo: int, nome: str):
-        self.__codigo == codigo
-        self.__nome == nome
+    def __init__(self, codigo: str, nome: str):
+        self.__codigo = codigo
+        self.__nome = nome
         self.__dispositivos = []
-        self.__funcionarios = []
+        self.__funcionarios = [Funcionario("teste", "07173582911", "e", "enf", "nome", "telefone"),
+                               Funcionario("teste2", "10860560945", "ads", "esdf", "nsdame", "telesadne")]
+
+    def __str__(self):
+        return f"| {self.__codigo} | {self.__nome} |"
 
     @property
     def codigo(self):
