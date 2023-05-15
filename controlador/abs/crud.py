@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 
 class Crud(ABC):
@@ -23,8 +23,9 @@ class Crud(ABC):
 
     def filtra_por_propriedade(self, propriedade, valor):
         listra_filtrada = list(filter(lambda item:
-                                    item.__dict__[propriedade] == valor,
+                                    getattr(item, propriedade) == valor,
                                     self.__lista))
+
         return listra_filtrada
 
     def altera(self, chave_primaria, propriedade, novo_valor):
@@ -36,7 +37,7 @@ class Crud(ABC):
             raise ValueError(f"{chave_primaria} esta cadastrado mais de uma vez!")
 
         for item in valores_a_alterar:
-            item.__dict__[propriedade] = novo_valor
+            setattr(item, propriedade, novo_valor)
 
     def deleta(self, chave_primaria):
         valores_a_deletar = self.filtra_por_propriedade(self.__nome_cp, chave_primaria)
@@ -50,9 +51,9 @@ class Crud(ABC):
             self.__lista.remove(item)
 
     @abstractmethod
-    def retorna():
+    def retorna(self):
         pass
 
     @abstractmethod
-    def abre_tela():
+    def abre_tela(self):
         pass

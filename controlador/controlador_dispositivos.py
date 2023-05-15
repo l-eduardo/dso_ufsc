@@ -2,6 +2,7 @@
 
 class ControladorDispositivos():
     def __init__(self):
+        pass
         
     def lista_dispositivos(self):
         pass
@@ -9,9 +10,9 @@ class ControladorDispositivos():
     def filtra_por_patrimonio(self, patrimonio):
         pass
 
-    def abre_tela()
+    def abre_tela():
         pass
 
-    def retorna()
+    def retorna():
         pass
     

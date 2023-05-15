@@ -1,5 +1,5 @@
 import datetime
-from abs.dispositivo import Dispositivo
+from modelo.abs.dispositivo import Dispositivo
 
 
 class Computador(Dispositivo):
@@ -18,9 +18,9 @@ class Computador(Dispositivo):
         super().__init__(patrimonio, marca, modelo, tipo, serial_number)
         if(isinstance(processador, str)):
             self.__processador = processador
-        if(isinstance(memoria_ram, int)):
+        if(isinstance(memoria_ram, str)):
             self.__memoria_ram = memoria_ram
-        if(isinstance(armazenamento, list)):
+        if(isinstance(armazenamento, str)):
             self.__armazenamento = armazenamento
         if(isinstance(so, str)):
             self.__so = so
@@ -57,6 +57,10 @@ class Computador(Dispositivo):
     def so(self, novo_so):
         if(isinstance(novo_so, str)):
             self.__so = novo_so
+
+    @property
+    def fim_garantia(self):
+        return self.__fim_garantia
 
     def adiciona_armazenamento(self, armazenamento):
         if(isinstance(armazenamento, float)):
