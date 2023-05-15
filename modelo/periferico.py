@@ -1,4 +1,4 @@
-from ClassesAbstratas.dispositivo import Dispositivo
+from modelo.abs.dispositivo import Dispositivo
 
 
 class Periferico(Dispositivo):
