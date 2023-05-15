@@ -34,50 +34,59 @@ class ControladorFuncionario:
 
     def inclui_funcionario(self):
         while True:
-            dados = {"cargo": "", "cpf": str, "email": "", "endereco": "", "nome": "", "telefone": ""}
-            dados["cpf"] = self.__limite_funcionario.recebe_dado("CPF")
-            if dados["cpf"] == "sair":
-                break
-            else:
+            try:
+                dados = {"cargo": str, "cpf": str, "email": str, "endereco": str, "nome": str, "telefone": str}
                 # Separa apenas os digitos numericos recebidos e os concatena em uma string
-                dados["cpf"] = ''.join(filter(str.isdigit, dados["cpf"]))
+                dados["cpf"] = ''.join(filter(str.isdigit, self.__limite_funcionario.recebe_dado("o CPF do funcionario")))
                 try:
                     self.verif_cpf_unico_valido(dados["cpf"])
                 except Exception as e:
                     print(e)
                     continue
-            dados["nome"] = self.__limite_funcionario.recebe_dado("nome")
-            if dados["nome"] == "sair":
+                dados["nome"] = self.__limite_funcionario.recebe_dado("o nome do funcionario")
+                dados["email"] = self.__limite_funcionario.recebe_dado("o email do funcionario")
+                dados["cargo"]= self.__limite_funcionario.recebe_dado("o cargo do funcionario")
+                dados["telefone"] = self.__limite_funcionario.recebe_dado("o telefone do funcionario")
+                dados["endereco"] = self.__limite_funcionario.recebe_dado("o endereco do funcionario")
+                self.__funcionarios.append(Funcionario(dados["cargo"],
+                                                       dados["cpf"],
+                                                       dados["email"],
+                                                       dados["endereco"],
+                                                       dados["nome"],
+                                                       dados["telefone"]))
+            except ValueError as e:
+                print(e)
                 break
-            dados["email"] = self.__limite_funcionario.recebe_dado("email")
-            if dados["email"] == "sair":
-                break
-            dados["cargo"]= self.__limite_funcionario.recebe_dado("cargo")
-            if dados["cargo"] == "sair":
-                break
-            dados["telefone"] = self.__limite_funcionario.recebe_dado("telefone")
-            if dados["telefone"] == "sair":
-                break
-            dados["endereco"] = self.__limite_funcionario.recebe_dado("endereco")
-            if dados["endereco"] == "sair":
-                break
-            self.__funcionarios.append(Funcionario(dados["cargo"],
-                                                   dados["cpf"],
-                                                   dados["email"],
-                                                   dados["endereco"],
-                                                   dados["nome"],
-                                                   dados["telefone"]))
             break
         self.abre_tela()
 
-    # ADD METODO EM TELA - ESTUDAR COMO ALTERAR CONFIG
+    def filtra_por_propriedade(self, propriedade: str, valor: str):
+        filtro = list(filter(lambda funcionario:
+                             getattr(funcionario, propriedade) == valor,
+                             self.__funcionarios))
+        if len(filtro) == 0:
+            raise ValueError(f">> Valor não encontrado ao aplicar filtro!")
+        return filtro
+
     def altera_funcionario(self):
-        cpf = self.__limite_funcionario.recebe_cpf()
-        for funcionario in self.__funcionarios:
-            if funcionario.cpf == cpf:
-                pass
-            else:
-                raise SystemError(f"Funcionário de CPF:{cpf} não encontrado!")
+        try:
+            cpf = self.__limite_funcionario.recebe_dado("o CPF do funcionario a ser editado")
+            funcionarios = self.filtra_por_propriedade("cpf", cpf)
+            if len(funcionarios) == 1:
+                funcionario = funcionarios[0]
+                propriedade = self.__limite_funcionario.mostra_tela_propriedades()
+                valor = self.__limite_funcionario.recebe_dado("o novo valor")
+                if propriedade == "cpf":
+                    while True:
+                        try:
+                            self.verif_cpf_unico_valido(valor)
+                            break
+                        except Exception as e:
+                            print(e)
+                            valor = self.__limite_funcionario.recebe_dado("o novo valor")
+                setattr(funcionario, propriedade, valor)
+        except ValueError as e:
+            print(e)
         self.abre_tela()
 
     def deleta_funcionario(self):
@@ -91,10 +100,18 @@ class ControladorFuncionario:
         self.__limite_funcionario.mostra_funcionarios(self.__funcionarios)
         self.abre_tela()
 
-    def filtra_por_propriedade(self, modelo):
-        pass
+    def lista_funcionarios_filtrados(self):
+        try:
+            propriedade = self.__limite_funcionario.mostra_tela_propriedades()
+            valor = self.__limite_funcionario.recebe_dado("o valor para filtro: ")
+            filtro = self.filtra_por_propriedade(propriedade, valor)
+            self.__limite_funcionario.mostra_funcionarios(filtro)
+        except Exception as e:
+            print(e)
+        self.abre_tela()
 
     def retorna(self):
+        #sistema.menu_principal()
         pass
 
     def abre_tela(self):
@@ -102,7 +119,7 @@ class ControladorFuncionario:
                   2: self.altera_funcionario,
                   3: self.deleta_funcionario,
                   4: self.lista_funcionarios,
-                  5: self.filtra_por_propriedade,
+                  5: self.lista_funcionarios_filtrados,
                   6: self.retorna}
         opcoes[self.__limite_funcionario.mostra_tela_opcoes()]()
 
