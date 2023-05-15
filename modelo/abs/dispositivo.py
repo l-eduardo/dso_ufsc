@@ -1,19 +1,15 @@
 from abc import ABC, abstractmethod
+from typing import Any, cast, get_type_hints
 
 
 class Dispositivo(ABC):
     @abstractmethod
     def __init__(self, patrimonio: str, marca: str, modelo: str, tipo: str, serial_number: str):
-        if(isinstance(patrimonio, str)):
-            self.__patrimonio = patrimonio
-        if(isinstance(marca, str)):
-            self.__marca = marca
-        if(isinstance(modelo, str)):
-            self.__modelo = modelo
-        if(isinstance(tipo, str)):
-            self.__tipo = tipo
-        if(isinstance(serial_number, str)):
-            self.__serial_number = serial_number
+        self.__patrimonio = patrimonio
+        self.__marca = marca
+        self.__modelo = modelo
+        self.__tipo = tipo
+        self.__serial_number = serial_number
 
     @property
     def patrimonio(self):

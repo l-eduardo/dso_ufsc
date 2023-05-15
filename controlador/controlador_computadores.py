@@ -12,23 +12,41 @@ class ControladorComputadores(Crud):
         self.__limiteComputador.exibe_computadores(super().lista)
 
     def inclui(self):
-        computador = Computador(*self.__limiteComputador.pega_dados())
+        dados_computador = self.__limiteComputador.pega_dados()
+        try:
+            print(dados_computador)
+            dados_computador['memoria_ram'] =  int(dados_computador['memoria_ram'])
+            dados_computador['armazenamento'] =  float(dados_computador['armazenamento'])
+            
+            computador = Computador(*dados_computador.values())
+        except Exception as e:
+            print("Erro: " + e)
+            self.abre_tela()
+            
         return super().inclui(computador)
     
     def altera(self):
-        patrimonio = self.__limiteComputador.pega_patrimonio()
-        propriedade = self.__limiteComputador.pega_propriedade()
-        novo_valor = self.__limiteComputador.novo_valor()
+        try:
+            patrimonio = self.__limiteComputador.pega_patrimonio()
+            propriedade = self.__limiteComputador.pega_propriedade()
+            novo_valor = self.__limiteComputador.novo_valor()
 
-        super().altera(
-            chave_primaria=patrimonio,
-            propriedade=propriedade,
-            novo_valor=novo_valor
-            )
+            super().altera(
+                chave_primaria=patrimonio,
+                propriedade=propriedade,
+                novo_valor=novo_valor
+                )
+        except Exception as e:
+            print("Erro: " + e)
+            self.abre_tela()
         
     def deleta(self):
-        patrimonio = self.__limiteComputador.pega_patrimonio()
-        super().deleta(patrimonio)
+        try:
+            patrimonio = self.__limiteComputador.pega_patrimonio()
+            super().deleta(patrimonio)
+        except Exception as e:
+            print("Erro: " + e)
+            self.abre_tela()
 
     def filtra(self):
         propriedade = self.__limiteComputador.pega_propriedade()
@@ -53,7 +71,3 @@ class ControladorComputadores(Crud):
 
     def retorna(self):
         pass
-
-c = ControladorComputadores()
-
-c.abre_tela()

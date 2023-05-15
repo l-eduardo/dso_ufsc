@@ -16,9 +16,8 @@ class LimiteComputador:
             entradas[i] = input(textos.dados_computador[i])
         print()
 
-        return entradas.values()
+        return entradas
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def exibe_computador(self, computador):
         for i in textos.dados_computador.keys():
             print(f"{textos.dados_computador[i]} {getattr(computador, i)}")
@@ -28,7 +27,6 @@ class LimiteComputador:
         for computador in computadores:
             self.exibe_computador(computador)
 
-  #fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def pega_patrimonio(self):
         print("-------- COMPUTADOR ----------")
         patrimonio = input(textos.selecionar_computador)

@@ -13,12 +13,9 @@ class DispositivoRede(Dispositivo):
                  numero_portas: int,
                  ):
         super().__init__(patrimonio, marca, modelo, tipo, serial_number)
-        if(isinstance(especifacao, str)):
-            self.__especifacao = especifacao
-        if(isinstance(portas, list)):
-            self.__portas = portas
-        if(isinstance(numero_portas, int)):
-            self.__numero_portas = numero_portas
+        self.__especifacao = especifacao
+        self.__portas = portas
+        self.__numero_portas = numero_portas
 
     @property
     def especifacao(self):
@@ -26,8 +23,7 @@ class DispositivoRede(Dispositivo):
 
     @especifacao.setter
     def especifacao(self, especifacao):
-        if(isinstance(especifacao, str)):
-            self.__especifacao = especifacao
+        self.__especifacao = especifacao
 
     @property
     def portas(self):
