@@ -48,3 +48,6 @@ class Emprestimo:
     @data_devolucao.setter
     def data_devolucao(self, data_devolucao: date):
         self.__data_devolucao = data_devolucao
+
+    def __eq__(self, value: object):
+        self.__id = value.id
