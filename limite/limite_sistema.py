@@ -1,27 +1,25 @@
 import time
 import sys
 import limite.textos.sistema as textos
+import PySimpleGUI as sg
 
 
 class LimiteSistema:
         def tela_opcoes(self):
-            for c in textos.opt:
-                print(c, end="")
-                # sys.stdout.write(c)
-                sys.stdout.flush()
-                time.sleep(0.025)
+            self.init_components()
+            button, _ = self.__window.Read()
+            return button
 
-            opt = input("Escolha a opcao: ")
+        def init_components(self):
+            buttons = [[sg.Button('Dispositivos', key=1, pad=(0, (10, 5)))],
+                       [sg.Button('Emprestimos', key=2, pad=(0, 5))],
+                       [sg.Button('Funcionarios', key=3, pad=(0, 5))],
+                       [sg.Button('Departamentos', key=4, pad=(0, 5))],
+                       [sg.Button('Sair', key=0, pad=(0, (50, 10)))],
+                       ]
 
-            return self.valida_entrada(opt)
-
-        def valida_entrada(self, opt):
-            try:
-                opt = int(opt)
-                if opt < 0 or opt > 4:
-                    raise ValueError("Opcao invalida")
-                return opt
-            except Exception as e:
-                print(e)
-                self.tela_opcoes()
-
+            layout = [
+                [sg.Text('Menu princpal', font=("Roboto",25), justification="center", tooltip="Menu principal")],
+                [sg.Column(buttons, justification="center", element_justification="center")],
+            ]
+            self.__window = sg.Window('Sistema de emprestimos').Layout(layout)
