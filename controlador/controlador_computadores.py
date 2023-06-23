@@ -1,4 +1,4 @@
-from controlador.abs.crud import Crud
+from controlador.abs.crud_abs import Crud
 from modelo.computador import Computador
 from limite.limite_computador import LimiteComputador
 
@@ -15,7 +15,6 @@ class ControladorComputadores(Crud):
     def inclui(self):
         dados_computador = self.__limiteComputador.pega_dados()
         try:
-            print(dados_computador)
             dados_computador['memoria_ram'] =  int(dados_computador['memoria_ram'])
             dados_computador['armazenamento'] =  float(dados_computador['armazenamento'])
             
@@ -38,7 +37,7 @@ class ControladorComputadores(Crud):
                 novo_valor=novo_valor
                 )
         except Exception as e:
-            print("Erro: " + e)
+            print("Erro: " + repr(e))
             self.abre_tela()
         
     def deleta(self):
@@ -49,13 +48,12 @@ class ControladorComputadores(Crud):
             print("Erro: " + e)
             self.abre_tela()
 
-    def filtra(self):
-        propriedade = self.__limiteComputador.pega_propriedade()
-        valor = self.__limiteComputador.novo_valor()
+    def busca(self):
+        propriedade = self.__limiteComputador.pega_patrimonio()
 
-        resultado = super().filtra_por_propriedade(propriedade, valor)
+        resultado = super().busca(propriedade)
 
-        self.__limiteComputador.exibe_computadores(resultado)
+        self.__limiteComputador.exibe_computador(resultado)
         
     def abre_tela(self):
         lista_opt = {
@@ -63,7 +61,7 @@ class ControladorComputadores(Crud):
             1: self.inclui,
             2: self.altera,
             3: self.deleta,
-            4: self.filtra_por_propriedade,
+            4: self.busca,
             5: self.lista
         }
 
