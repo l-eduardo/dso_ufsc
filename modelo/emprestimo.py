@@ -13,17 +13,9 @@ class Emprestimo:
     def dispositivos(self):
         return self.__dispositivos
 
-    @dispositivos.setter
-    def dispositivos(self, dispositivos: list):
-        self.__dispositivos = dispositivos
-
     @property
     def funcionario(self):
         return self.__funcionario
-
-    @funcionario.setter
-    def funcionario(self, funcionario: Funcionario):
-        self.__funcionario = funcionario
 
     @property
     def data_inicio(self):
@@ -37,17 +29,15 @@ class Emprestimo:
     def id(self):
         return self.__id
 
-    @id.setter
-    def id(self, id: str):
-        self.__id = id
-
     @property
     def data_devolucao(self):
         return self.__data_devolucao
 
-    @data_devolucao.setter
-    def data_devolucao(self, data_devolucao: date):
-        self.__data_devolucao = data_devolucao
+    def esta_finalizado(self):
+        return self.__data_devolucao is not None:
+    
+    def finalizar(self):
+        self.__data_devolucao = date.today()
 
     def __eq__(self, value: object):
         self.__id = value.id
