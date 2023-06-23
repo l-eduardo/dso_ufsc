@@ -24,8 +24,8 @@ class LimiteComputador:
 
     def exibe_computadores(self, computadores):
         os.system('clear')
-        for computador in computadores:
-            self.exibe_computador(computador)
+        for i in computadores:
+            self.exibe_computador(computadores[i])
 
     def pega_patrimonio(self):
         print("-------- COMPUTADOR ----------")

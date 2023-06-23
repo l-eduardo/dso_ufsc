@@ -1,5 +1,4 @@
 import datetime
-from typing import Any
 from modelo.abs.dispositivo import Dispositivo
 from modelo.validacao.validador_dispositivos import ValidadorDispositivo
 
@@ -43,6 +42,10 @@ class Computador(Dispositivo, ValidadorDispositivo):
     @property
     def armazenamento(self):
         return self.__armazenamento
+    
+    @armazenamento.setter
+    def armazenamento(self, novo_armazenamento):
+        self.__armazenamento = novo_armazenamento
 
     @property
     def so(self):
@@ -59,14 +62,6 @@ class Computador(Dispositivo, ValidadorDispositivo):
     @fim_garantia.setter
     def fim_garantia(self, nova_fim_garantia):
         self.__fim_garantia = nova_fim_garantia
-
-    @property
-    def armazenamento(self):
-        return sum(self.__armazenamento)
-
-    @armazenamento.getter
-    def armazenamento(self):
-        return self.__armazenamento
 
     def esta_na_garantia(self):
         hoje = datetime.datetime.today()
