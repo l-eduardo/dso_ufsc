@@ -1,17 +1,20 @@
 from datetime import date
 from modelo.funcionario import Funcionario
+from modelo.abs.dispositivo import Dispositivo
+
+import uuid
 
 class Emprestimo:
-    def __init__(self, id: int, dispositivos: list, funcionario: Funcionario, data_inicio: date):
-        self.__dispositivos = dispositivos
+    def __init__(self, dispositivo: Dispositivo, funcionario: Funcionario, data_inicio: date):
+        self.__dispositivo = dispositivo
         self.__funcionario = funcionario
         self.__data_inicio = data_inicio
-        self.__id = id
         self.__data_devolucao = None
+        self.__id = uuid.uuid4()
 
     @property
-    def dispositivos(self):
-        return self.__dispositivos
+    def dispositivo(self):
+        return self.__dispositivo
 
     @property
     def funcionario(self):
@@ -34,8 +37,8 @@ class Emprestimo:
         return self.__data_devolucao
 
     def esta_finalizado(self):
-        return self.__data_devolucao is not None:
-    
+        return self.__data_devolucao is not None
+
     def finalizar(self):
         self.__data_devolucao = date.today()
 
