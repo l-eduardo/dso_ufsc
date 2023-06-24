@@ -1,4 +1,4 @@
-from abs.limite_psg import LimitePSG
+from limite.abs.limite_psg import LimitePSG
 
 
 class LimiteFuncionario(LimitePSG):
