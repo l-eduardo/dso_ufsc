@@ -8,7 +8,6 @@ class Crud(ABC):
         self.__dao = DAO(T.__name__)
         self.__t = T
         self.__nome_cp = nome_cp
-
     @property
     def lista(self):
         return self.__dao.get_all()
@@ -17,7 +16,7 @@ class Crud(ABC):
         if(not isinstance(item, self.__t)):
             raise TypeError(f"Tipo invalido! {item} nao faz parte de {self.__t}")
 
-        self.__dao.add(item.patrimonio, item)
+        self.__dao.add(getattr(item, self.__nome_cp), item)
 
     def busca(self, chave_primaria):
         return self.__dao.get(chave_primaria)
