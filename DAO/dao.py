@@ -22,12 +22,13 @@ class DAO():
     
     def get(self, key):
         try:
+            self.__load()
             return self.__cache[key]
         except KeyError:
-            self.__load()
             return None
     
     def get_all(self):
+        self.__load()
         return self.__cache
 
     def add(self, key, value):
