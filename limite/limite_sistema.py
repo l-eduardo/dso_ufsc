@@ -2,22 +2,23 @@ import time
 import sys
 import limite.textos.sistema as textos
 import PySimpleGUI as sg
-
+from limite.components.buttons_menu import Menus
 
 class LimiteSistema:
         def tela_opcoes(self):
-            self.init_components()
+            self.setup_componentes()
             button, _ = self.__window.Read()
             return button
 
-        def init_components(self):
-            buttons = [[sg.Button('Dispositivos', key=1, pad=(0, (10, 5)), expand_x=True)],
-                       [sg.Button('Emprestimos', key=2, pad=(0, 5), expand_x=True)],
-                       [sg.Button('Funcionarios', key=3, pad=(0, 5), expand_x=True)],
-                       [sg.Button('Departamentos', key=4, pad=(0, 5), expand_x=True)],
-                       [sg.Button('Sair', key=0, pad=(0, (50, 10)), expand_x=True)],
-                       ]
+        def setup_componentes(self):
+            buttons_text = ['Dispositivos',
+                            'Emprestimos',
+                            'Funcionarios',
+                            'Departamentos',
+                            'Sair']
 
+            buttons = Menus.buttons_menu_setup(buttons_text)
+            
             layout = [
                 [sg.Text('Menu princpal',
                          font=("Roboto",25),
