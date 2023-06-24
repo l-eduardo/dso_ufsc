@@ -1,6 +1,6 @@
 import datetime
 from modelo.abs.dispositivo import Dispositivo
-from modelo.validacao.validador_dispositivos import ValidadorDispositivo
+from validacao.validador_dispositivos import ValidadorDispositivo
 
 
 class Computador(Dispositivo, ValidadorDispositivo):
@@ -22,6 +22,11 @@ class Computador(Dispositivo, ValidadorDispositivo):
         self.__armazenamento = armazenamento
         self.__so = so
         self.__fim_garantia = fim_garantia
+    
+    def __eq__(self, __value: object):
+        if isinstance(__value, Computador):
+            return super().patrimonio == __value.patrimonio
+        return False
 
     @property
     def processador(self):
