@@ -1,13 +1,39 @@
-from limite.abs.limite import Limite
-import limite.textos.computador as textos
 import os
+import PySimpleGUI as sg
+
+from limite.abs.limite import Limite
+from limite.components.buttons_menu import Menus
+import limite.textos.computador as textos
 
 class LimiteComputador:
     def tela_opcoes(self):
-        print(textos.opt)
+        self.setup_componentes()
+        button, _ = self.__window.Read()
+        return button
 
-        opcao = int(input("Escolha a opcao: "))
-        return opcao
+    def setup_componentes(self):
+        buttons_text = [
+            'inclui',
+            'altera',
+            'deleta',
+            'busca',
+            'lista',
+            'retorna',
+        ]
+
+        buttons = Menus.buttons_menu_setup(buttons_text)
+
+        layout = [
+            [sg.Text('Menu Computadores',
+                        font=("Roboto",25),
+                        justification="center",
+                        tooltip="Menu Computadores")],
+            [sg.Column(buttons,
+                        justification="center",
+                        element_justification="center")],
+        ]
+
+        self.__window = sg.Window('Sistema de emprestimos').Layout(layout)
 
     def pega_dados(self):
         entradas = {}
