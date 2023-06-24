@@ -1,14 +1,14 @@
 
 
 class Funcionario:
-    def __init__ (self, cargo: str, cpf: str, email: str, endereco: str, nome: str, telefone: str):
+    def __init__ (self, cpf: str, nome: str, email: str, telefone: str,cargo: str, endereco: str):
         # Controladora do sistema - valida dados
-        self.__cargo = cargo
         self.__cpf = cpf
-        self.__email = email
-        self.__endereco = endereco
         self.__nome = nome
+        self.__email = email
         self.__telefone = telefone
+        self.__cargo = cargo
+        self.__endereco = endereco
 
     def __str__(self):
         return f"{self.__cpf} | {self.__nome} | {self.__email} | {self.__telefone} | {self.__cargo} | {self.__endereco}"

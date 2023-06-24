@@ -1,8 +1,14 @@
+from abs.limite_psg import LimitePSG
 
 
-class LimiteFuncionario:
+class LimiteFuncionario(LimitePSG):
     def __init__ (self):
-        self.__cabecalho = "="*50 + "Menu Funcionario".center(21) + "="*50 + "\n"
+        super().__init__(cabecalho = ["CPF",
+                            "Nome",
+                            "E-mail",
+                            "Telefone",
+                            "Cargo",
+                            "Endereço"])
 
     def recebe_dado(self, mensagem: str):
         dado = input(f"\n(Para sair digite 'sair')\nDigite {mensagem}: ")
