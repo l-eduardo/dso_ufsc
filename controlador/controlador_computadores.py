@@ -57,12 +57,12 @@ class ControladorComputadores(Crud):
         
     def abre_tela(self):
         lista_opt = {
-            0: self.retorna,
             1: self.inclui,
             2: self.altera,
             3: self.deleta,
             4: self.busca,
-            5: self.lista
+            5: self.lista,
+            6: self.retorna,
         }
 
         while True:
