@@ -39,12 +39,7 @@ class ControladorFuncionario(Crud):
                                 "cargo": '',
                                 "endereco": ''}
         valores = self.__limite_funcionario.tela_cria_edita("Funcionario", dicionario_atributos)
-        self.__lista.append(Funcionario(valores["cpf"],
-                                        valores["nome"],
-                                        valores["email"],
-                                        valores["telefone"],
-                                        valores["cargo"],
-                                        valores["endereco"]))
+        super().inclui(Funcionario(*valores.values()))
 #telas psg
     def valores_dos_objetos(self, lista_de_objetos: list):
         valores_dos_objetos = []
@@ -136,10 +131,11 @@ class ControladorFuncionario(Crud):
 #         self.__limite_funcionario.mostra_funcionario(super().busca(cpf))
 #         self.abre_tela()
 
-#     def retorna(self):
-#         self.__controlador_sistema.abre_tela()
+    def retorna(self):
+        self.__controlador_sistema.abre_tela()
 
-#     def abre_tela(self):
+    def abre_tela(self):
+        pass
 #         opcoes = {1: self.inclui,
 #                   2: self.altera,
 #                   3: self.deleta,
