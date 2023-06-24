@@ -67,14 +67,3 @@ class ControladorEmprestimo(Crud):
     def esta_emprestado(self):
         emprestimos = [emprestimo for emprestimo in super().lista.values() if not emprestimo.esta_finalizado()]
         self.__limite_emprestimo.mostra_emprestimos(emprestimos)
-
-
-
-ce = ControladorEmprestimo(controlador_sistema=None)
-
-# ce.inclui()
-
-# ce.lista()
-# ce.funcionarios_com_itens()
-# ce.dispositivos_emprestados()
-ce.esta_emprestado()
