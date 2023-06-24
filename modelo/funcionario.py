@@ -13,6 +13,10 @@ class Funcionario:
     def __str__(self):
         return f"{self.__cpf} | {self.__nome} | {self.__email} | {self.__telefone} | {self.__cargo} | {self.__endereco}"
 
+    def __eq__(self, __value: object):
+        if isinstance(__value, Funcionario):
+            return self.__cpf == __value.cpf
+        return False
 
     @property
     def cargo(self) -> str:

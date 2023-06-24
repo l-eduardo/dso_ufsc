@@ -48,7 +48,11 @@ class LimiteFuncionario(LimitePSG):
             raise ValueError("Esta propriedade não existe!")
 
     def mostra_funcionarios(self, funcionarios: list):
+        os.system('clear')
         print("\n\n|","CPF","|","NOME","|","CARGO","|","EMAIL","|","TELEFONE","|","ENDERECO","|")
-        for func in funcionarios:
-            print("|",func.cpf,"|",func.nome,"|",func.cargo,"|",func.email,"|",func.telefone,"|",func.endereco,"|")
+        for func in funcionarios.values():
+            self.mostra_funcionario(func)
         input("\n\nPressione qualquer tecla para continuar...")
+
+    def mostra_funcionario(self, funcionario):
+        print("|",funcionario.cpf,"|",funcionario.nome,"|",funcionario.cargo,"|",funcionario.email,"|",funcionario.telefone,"|",funcionario.endereco,"|")
