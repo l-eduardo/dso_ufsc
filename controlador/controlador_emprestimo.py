@@ -43,7 +43,15 @@ class ControladorEmprestimo(Crud):
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        pass
+        opcoes = {
+            "Novo emprestimo": self.inclui,
+            "Listar eprestimos": self.lista,
+            "Funcionarios com itens": self.funcionarios_com_itens,
+            "Dispositivos emprestados": self.dispositivos_emprestados,
+            "Historico": self.historico,
+            "Emprestimos em andamento": self.esta_emprestado,
+        }
+        opcoes[self.__limite_emprestimo.tela_menu(opcoes.keys())]()
 
     def funcionarios_com_itens(self):
         funcionarios = []

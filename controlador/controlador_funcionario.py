@@ -95,6 +95,6 @@ class ControladorFuncionario(Crud):
                   "Editar": self.altera,
                   "Listar": self.lista,
                   "Remover": self.deleta}
-        opcoes[self.__limite_funcionario.tela_menu()]()
+        opcoes[self.__limite_funcionario.tela_menu(opcoes.keys())]()
         
 

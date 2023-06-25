@@ -10,7 +10,3 @@ class LimiteFuncionario(LimitePSG):
                                       "Cargo",
                                       "Endereço"],
                         nome_objeto = "Funcionário")
-        self.__botoes_menu = ["Criar", "Editar", "Listar", "Remover"]
-
-    def tela_menu(self):
-        return super().tela_menu(self.__botoes_menu)
