@@ -1,3 +1,9 @@
+import os
+import sys
+
+current_dir = os.getcwd()
+sys.path.append(current_dir)
+
 from controlador.controlador_sistema import ControladorSistema
 import PySimpleGUI as sg
 

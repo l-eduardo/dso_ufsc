@@ -19,7 +19,6 @@ class LimitePSG(ABC):
                          [sg.Input(key=f'-{item}-', 
                                    default_text=dicionario_atributo_valor[item])]])
         layout.append([sg.Button('Salvar'), sg.Button('Cancelar')])
-
         window = sg.Window(f'Dados {self.__nome_objeto}', layout)
 
         while True:
@@ -50,7 +49,8 @@ class LimitePSG(ABC):
                           expand_x=True,
                           expand_y=True,
                           enable_click_events=False,
-                          select_mode=sg.TABLE_SELECT_MODE_BROWSE)
+                          select_mode=sg.TABLE_SELECT_MODE_BROWSE,
+                          vertical_scroll_only = False)
         layout = [[tabela],
                   [sg.Button("Cancelar")]]
         if edit_mode:
