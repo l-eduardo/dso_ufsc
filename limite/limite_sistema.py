@@ -8,6 +8,7 @@ class LimiteSistema:
         def tela_opcoes(self):
             self.init_components()
             button, _ = self.__window.Read()
+            self.__window.close()
             return button
 
         def init_components(self):
@@ -19,7 +20,7 @@ class LimiteSistema:
                        ]
 
             layout = [
-                [sg.Text('Menu princpal',
+                [sg.Text('Menu principal',
                          font=("Roboto",25),
                          justification="center",
                          tooltip="Menu principal")],

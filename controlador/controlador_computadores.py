@@ -9,64 +9,82 @@ class ControladorComputadores(Crud):
         self.__limiteComputador = LimiteComputador()
         self.__controlador_sistema = controlador_sistema
 
+
+    def valores_dos_objetos(self, lista_de_objetos: list):
+        valores_dos_objetos = []
+        for objeto in lista_de_objetos:
+            valores_dos_objetos.append(list(vars(objeto).values()))
+        return valores_dos_objetos
+
     def lista(self):
-        self.__limiteComputador.exibe_computadores(super().lista)
+        self.__limiteComputador.tela_lista_seleciona(self.valores_dos_objetos(list(super().lista.values())))
 
     def inclui(self):
-        dados_computador = self.__limiteComputador.pega_dados()
+        dicionario_atributos = {"Patrimonio": '',
+                                "Marca": '',
+                                "Modelo": '',
+                                "Tipo": '',
+                                "Serial Number": '',
+                                "Processador": '',
+                                "Memoria RAM": '',
+                                "Armazenamento": '',
+                                "Sistema Operacional": '',
+                                "Prazo Garantia": ''}
+        valores = self.__limiteComputador.tela_cria_edita(dicionario_atributos)
         try:
-            dados_computador['memoria_ram'] =  int(dados_computador['memoria_ram'])
-            dados_computador['armazenamento'] =  float(dados_computador['armazenamento'])
-            
-            computador = Computador(*dados_computador.values())
+            computador = Computador(patrimonio=valores["Patrimonio"],
+                                     marca=valores["Marca"],
+                                     modelo=valores["Modelo"],
+                                     tipo=valores["Tipo"],
+                                     serial_number=valores["Serial Number"],
+                                     processador=valores["Processador"],
+                                     memoria_ram=int(valores["Memoria RAM"]),
+                                     armazenamento=float(valores["Armazenamento"]),
+                                     so=valores["Sistema Operacional"],
+                                     fim_garantia=valores["Prazo Garantia"])
         except Exception as e:
             print("Erro: " + e)
             self.abre_tela()
-            
+
         return super().inclui(computador)
     
     def altera(self):
+        selecao = self.__limiteComputador.tela_lista_seleciona( 
+                                                     self.valores_dos_objetos(super().lista.values()), 
+                                                     True)
+        dicionario_atributos = {"patrimonio": selecao[0],
+                                "marca": selecao[1],
+                                "modelo": selecao[2],
+                                "tipo": selecao[3],
+                                "serial_number": selecao[4],
+                                "processador": selecao[5],
+                                "memoria_ram": selecao[6],
+                                "armazenamento": selecao[7],
+                                "so": selecao[8],
+                                "fim_garantia": selecao[9]}
+        novos_valores = self.__limiteComputador.tela_cria_edita(dicionario_atributos)
         try:
-            patrimonio = self.__limiteComputador.pega_patrimonio()
-            propriedade = self.__limiteComputador.pega_propriedade()
-            novo_valor = self.__limiteComputador.novo_valor()
-
-            super().altera(
-                chave_primaria=patrimonio,
-                propriedade=propriedade,
-                novo_valor=novo_valor
-                )
-        except Exception as e:
-            print("Erro: " + repr(e))
-            self.abre_tela()
+            novos_valores["memoria_ram"] = int(novos_valores["memoria_ram"])
+            novos_valores["armazenamento"] = float(novos_valores["armazenamento"])
+            patrimonio = dicionario_atributos["patrimonio"] 
+            super().altera(patrimonio, novos_valores)
+        except ValueError as e:
+            print(repr(e))
+        self.abre_tela()
         
     def deleta(self):
-        try:
-            patrimonio = self.__limiteComputador.pega_patrimonio()
-            super().deleta(patrimonio)
-        except Exception as e:
-            print("Erro: " + e)
-            self.abre_tela()
-
-    def busca(self):
-        propriedade = self.__limiteComputador.pega_patrimonio()
-
-        resultado = super().busca(propriedade)
-
-        self.__limiteComputador.exibe_computador(resultado)
+        lista_valores = self.valores_dos_objetos(super().lista.values())
+        patrimonio = self.__limiteComputador.tela_lista_seleciona(lista_valores, 
+                                                                  True)[0]
+        super().deleta(patrimonio)
+        self.abre_tela()
         
     def abre_tela(self):
-        lista_opt = {
-            0: self.retorna,
-            1: self.inclui,
-            2: self.altera,
-            3: self.deleta,
-            4: self.busca,
-            5: self.lista
-        }
-
-        while True:
-            lista_opt[self.__limiteComputador.tela_opcoes()]()
+        opcoes = {"Criar": self.inclui,
+                  "Editar": self.altera,
+                  "Listar": self.lista,
+                  "Remover": self.deleta}
+        opcoes[self.__limiteComputador.tela_menu(opcoes.keys())]()
 
     def retorna(self):
         self.__controlador_sistema.abre_tela()
