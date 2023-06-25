@@ -21,10 +21,11 @@ class Crud(ABC):
     def busca(self, chave_primaria):
         return self.__dao.get(chave_primaria)
 
-    def altera(self, chave_primaria, propriedade, novo_valor):
+    def altera(self, chave_primaria, novos_atributos: dict):
         valor_a_alterar = self.__dao.get(chave_primaria)
 
-        valor_a_alterar.__setattr__(propriedade, novo_valor)
+        for atributo in novos_atributos:
+            valor_a_alterar.__setattr__(atributo, novos_atributos[atributo])
 
         self.__dao.update(chave_primaria, valor_a_alterar)
 
