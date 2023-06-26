@@ -55,7 +55,7 @@ class ControladorFuncionario(Crud):
     def altera(self):
         selecao = self.__limite_funcionario.tela_lista_seleciona( 
                                                      self.valores_dos_objetos(super().lista.values()), 
-                                                     True)
+                                                     edit_mode=True)
         dicionario_atributos = {"cpf": selecao[0], 
                                 "nome": selecao[1], 
                                 "email": selecao[2], 
@@ -73,7 +73,7 @@ class ControladorFuncionario(Crud):
     def deleta(self):
         cpf = self.__limite_funcionario.tela_lista_seleciona(self.valores_dos_objetos
                                                                  (super().lista.values()), 
-                                                                 True)[0]
+                                                                 edit_mode=True)[0]
         super().deleta(cpf)
         self.abre_tela()
 
@@ -94,6 +94,6 @@ class ControladorFuncionario(Crud):
                   "Editar": self.altera,
                   "Listar": self.lista,
                   "Remover": self.deleta}
-        opcoes[self.__limite_funcionario.tela_menu(opcoes.keys())]()
-        
-
+        botao_clicado = self.__limite_funcionario.tela_menu(opcoes.keys())
+        if botao_clicado:
+            opcoes[botao_clicado]()

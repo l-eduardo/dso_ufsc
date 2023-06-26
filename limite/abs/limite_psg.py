@@ -38,9 +38,9 @@ class LimitePSG(ABC):
     # ARG: lista_valores - Matriz com as listas dos valores dos atributos dos objetos (linhas da tabela)
     # ARG: edit_mode - Bool para informar se deve haver botao de selecionar objeto e retorno de ID
     # RETURN: se edit_mode True, retorna o ID informado na linha selecionada
-    def tela_lista_seleciona(self, lista_valores: list, edit_mode: bool = False):
+    def tela_lista_seleciona(self, lista_valores: list, headers: list = [], edit_mode: bool = False):
         registros = lista_valores
-        tabela = sg.Table(registros, self.__cabecalho,
+        tabela = sg.Table(registros, headings=headers or self.__cabecalho,
                           auto_size_columns=True,
                           display_row_numbers=False,
                           justification='center', key='-TABELA-',

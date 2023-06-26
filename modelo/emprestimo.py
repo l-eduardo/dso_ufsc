@@ -5,10 +5,10 @@ from modelo.abs.dispositivo import Dispositivo
 import uuid
 
 class Emprestimo:
-    def __init__(self, dispositivo: Dispositivo, funcionario: Funcionario, data_inicio: date):
+    def __init__(self, dispositivo: Dispositivo, funcionario: Funcionario):
         self.__dispositivo = dispositivo
         self.__funcionario = funcionario
-        self.__data_inicio = data_inicio
+        self.__data_inicio = date.today()
         self.__data_devolucao = None
         self.__id = uuid.uuid4()
 

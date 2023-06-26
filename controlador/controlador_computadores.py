@@ -51,7 +51,7 @@ class ControladorComputadores(Crud):
     def altera(self):
         selecao = self.__limiteComputador.tela_lista_seleciona( 
                                                      self.valores_dos_objetos(super().lista.values()), 
-                                                     True)
+                                                     edit_mode=True)
         dicionario_atributos = {"patrimonio": selecao[0],
                                 "marca": selecao[1],
                                 "modelo": selecao[2],
@@ -75,7 +75,7 @@ class ControladorComputadores(Crud):
     def deleta(self):
         lista_valores = self.valores_dos_objetos(super().lista.values())
         patrimonio = self.__limiteComputador.tela_lista_seleciona(lista_valores, 
-                                                                  True)[0]
+                                                                  edit_mode=True)[0]
         super().deleta(patrimonio)
         self.abre_tela()
         
@@ -84,7 +84,9 @@ class ControladorComputadores(Crud):
                   "Editar": self.altera,
                   "Listar": self.lista,
                   "Remover": self.deleta}
-        opcoes[self.__limiteComputador.tela_menu(opcoes.keys())]()
+        botao_clicado = self.__limiteComputador.tela_menu(opcoes.keys())
+        if botao_clicado:
+            opcoes[botao_clicado]()
 
     def retorna(self):
         self.__controlador_sistema.abre_tela()
