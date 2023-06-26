@@ -4,6 +4,7 @@ from controlador.controlador_emprestimo import ControladorEmprestimo
 from controlador.controlador_funcionario import ControladorFuncionario
 from limite.limite_sistema import LimiteSistema
 
+
 class ControladorSistema:
     def __init__(self):
         self.__controlador_funcionario = ControladorFuncionario(self)

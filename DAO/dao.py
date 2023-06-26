@@ -1,4 +1,5 @@
 import pickle
+from exceptions.chave_unica import ChaveUnicaException
 
 
 class DAO():
@@ -58,7 +59,10 @@ class DAO():
         return self.__cache
 
     def add(self, key, value):
-        self.__cache[key] = value
+        if key not in self.__cache.keys():
+            self.__cache[key] = value
+        else:
+            raise ChaveUnicaException()
         self.__dump()
         return value
 

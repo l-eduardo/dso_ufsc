@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from exceptions.selecao_nula import SelecaoNulaException
 import PySimpleGUI as sg
 
 
@@ -8,19 +9,18 @@ class LimitePSG(ABC):
         self.__cabecalho = cabecalho
         self.__nome_objeto = nome_objeto
 
-# Apresenta janela com campos de input para a criacao de um objeto
-    # ARG: nome_objeto - string com o nome do Objeto a ser criado
-    # ARG: dicionario_atributo_valor - dicionario com atributo
-    # RETURN: Dicionario com valores "nome_atributo":"valor lido do input" 
-    def tela_cria_edita(self, dicionario_atributo_valor: dict):
+    def tela_cria_edita(self, dicionario_atributo_valor: dict, edit_mode: bool = False):
         layout = []
         for item in dicionario_atributo_valor:
           layout.append([[sg.Text(f'{item}')],
                          [sg.Input(key=f'-{item}-', 
-                                   default_text=dicionario_atributo_valor[item])]])
+                                   default_text=dicionario_atributo_valor[item],
+                                   disabled_readonly_background_color="#4682b4")]])
         layout.append([sg.Button('Salvar'), sg.Button('Cancelar')])
+        if edit_mode:
+            layout[0][1][0].__setattr__("ReadOnly", True)
+            layout[0][1][0].__setattr__("disabled_readonly_text_color", "#303030")
         window = sg.Window(f'Dados {self.__nome_objeto}', layout)
-
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Cancelar':
@@ -33,18 +33,13 @@ class LimitePSG(ABC):
                 return valores
         window.close()
 
-    # Apresenta janela com uma tabela de valores dos objetos
-    # ARG: self.__cabecalho - Lista dos textos para o self.__cabecalho da tabela
-    # ARG: lista_valores - Matriz com as listas dos valores dos atributos dos objetos (linhas da tabela)
-    # ARG: edit_mode - Bool para informar se deve haver botao de selecionar objeto e retorno de ID
-    # RETURN: se edit_mode True, retorna o ID informado na linha selecionada
     def tela_lista_seleciona(self, lista_valores: list, headers: list = [], edit_mode: bool = False):
         registros = lista_valores
         tabela = sg.Table(registros, headings=headers or self.__cabecalho,
                           auto_size_columns=True,
                           display_row_numbers=False,
                           justification='center', key='-TABELA-',
-                          selected_row_colors='red on yellow',
+                          selected_row_colors='#191970 on #add8e6',
                           enable_events=True,
                           expand_x=True,
                           expand_y=True,
@@ -55,32 +50,40 @@ class LimitePSG(ABC):
                   [sg.Button("Cancelar")]]
         if edit_mode:
             layout[-1].insert(0, sg.Button("Selecionar"))
-
         window = sg.Window(f"Lista {self.__nome_objeto}", layout, size=(900, 300), resizable=True)
-
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == "Cancelar":
                 break
             if event == "Selecionar":
-                window.close()
-                return lista_valores[values["-TABELA-"][0]]
+                if values["-TABELA-"]:
+                    window.close()
+                    return lista_valores[values["-TABELA-"][0]]
+                else:
+                    window.close()
+                    raise SelecaoNulaException()
         window.close()
 
     def tela_menu(self, lista_botoes: list):
-        layout = []
+        buttons = []
         for text in lista_botoes:
-            layout.append([sg.Button(button_text = text,
+            buttons.append([sg.Button(button_text = text,
                                      key = f'{text}',
                                      pad=(0, (10, 5)),
-                                     expand_x=True)])
-        layout.append([sg.Button(button_text = "Cancelar",
+                                     expand_x=True)]
+                                     )
+        buttons.append([sg.Button(button_text = "    Cancelar    ",
                                      key = 'Cancelar',
-                                     pad=(0, (10, 5)),
+                                     pad=(0, (50, 10)),
                                      expand_x=True)])
-
+        layout = [[sg.Text(f'Menu {self.__nome_objeto}',
+                 font=("Roboto",25),
+                 justification="center",
+                 tooltip="Menu principal")],
+                 [sg.Column(buttons,
+                            justification="center",
+                            element_justification="center")]]
         window = sg.Window(f"Menu {self.__nome_objeto}", layout, resizable=True)
-
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == "Cancelar":
@@ -89,3 +92,6 @@ class LimitePSG(ABC):
                 window.close()
                 return event
         window.close()
+
+    def popup(self, texto: str):
+        sg.popup(texto,title="Erro")

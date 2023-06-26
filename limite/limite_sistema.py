@@ -12,10 +12,9 @@ class LimiteSistema:
             return button
 
         def init_components(self):
-            buttons = [[sg.Button('Dispositivos', key=1, pad=(0, (10, 5)), expand_x=True)],
+            buttons = [[sg.Button('Computadores', key=1, pad=(0, (10, 5)), expand_x=True)],
                        [sg.Button('Emprestimos', key=2, pad=(0, 5), expand_x=True)],
                        [sg.Button('Funcionarios', key=3, pad=(0, 5), expand_x=True)],
-                       [sg.Button('Departamentos', key=4, pad=(0, 5), expand_x=True)],
                        [sg.Button('Sair', key=0, pad=(0, (50, 10)), expand_x=True)],
                        ]
 
