@@ -10,7 +10,7 @@ from exceptions.selecao_nula import SelecaoNulaException
 
 class ControladorEmprestimo(Crud):
     def __init__(self, controlador_sistema):
-        super().__init__(T=Emprestimo, nome_cp="id")
+        super().__init__(T=Emprestimo, nome_cp="id", subjects=["Funcionario", "Computador"])
         self.__controlador_sistema = controlador_sistema
         self.__limite_emprestimo = LimiteEmprestimo()
         self.__dao_funcionario = DAO(datasource=Funcionario.__name__)

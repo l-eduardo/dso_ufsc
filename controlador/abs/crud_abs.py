@@ -4,8 +4,8 @@ from DAO.dao import DAO
 
 class Crud(ABC):
     @abstractmethod
-    def __init__(self, T, nome_cp):
-        self.__dao = DAO(T.__name__)
+    def __init__(self, T, nome_cp, subjects = []):
+        self.__dao = DAO(T.__name__, subjects)
         self.__t = T
         self.__nome_cp = nome_cp
     @property

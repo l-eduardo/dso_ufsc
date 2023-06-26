@@ -5,41 +5,42 @@ from exceptions.chave_unica import ChaveUnicaException
 class DAO():
     __assunto = {}
 
-    def __init__(self, datasource = "") -> None:
+    def __init__(self, datasource = "", subjects = []) -> None:
         self.__datasource = datasource
+        self.__subjects = subjects
         self.__cache = {}
         self.__pkl_path = "./data/" + self.__datasource + ".pkl"
         self.setup()
 
     def setup(self):
         try:
-            self.inscrever(self.__datasource)
+            self.inscrever([self.__datasource, *self.__subjects])
             self.__load()
         except FileNotFoundError:
             self.__dump()
 
-    def inscrever(self, subject):
-        if subject in DAO.__assunto.keys():
-            DAO.__assunto[subject].append(self)
-        else:
-            DAO.__assunto[subject] = [self]
-        print(DAO.__assunto[subject])
+    def inscrever(self, subjects):
+        for subject in subjects:
+            if subject in DAO.__assunto.keys():
+                DAO.__assunto[subject].append(self)
+            else:
+                DAO.__assunto[subject] = [self]
+            print(DAO.__assunto[subject])
+
     def desinscrever(self):
         pass
 
-    def __notificar_update(self):
+    def __notificar_update(self, *args):
         for i in DAO.__assunto[self.__datasource]:
-            i.__recebe_notificacao("update")
+            i.__recebe_notificacao(self.update, args)
     
-    def __notificar_remove(self):
+    def __notificar_remove(self, *args):
         for i in DAO.__assunto[self.__datasource]:
-            i.__recebe_notificacao("remove")
+            i.__recebe_notificacao(self.remove, args)
 
-    def __recebe_notificacao(self, evento):
-        if evento == "update":
-            print("update")
-        elif evento == "remove":
-            print("remove")
+    def __recebe_notificacao(self, fn, *args):
+        print(args, fn)
+        fn(*args)
 
     def __dump(self):
         pickle.dump(self.__cache, open(self.__pkl_path, "wb"))
@@ -70,7 +71,7 @@ class DAO():
         try:
             del self.__cache[key]
             self.__dump()
-            self.__notificar_remove()
+            self.__notificar_remove(key)
         except KeyError:
             self.__load()
             return []
@@ -79,7 +80,7 @@ class DAO():
         try:
             self.__cache[key] = value
             self.__dump()
-            self.__notificar_update()
+            self.__notificar_update(key, value)
             return value
         except Exception as e:
             print(repr(e))
