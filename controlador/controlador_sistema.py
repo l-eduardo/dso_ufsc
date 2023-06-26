@@ -1,5 +1,4 @@
 from controlador.controlador_computadores import ControladorComputadores
-from controlador.controlador_departamento import ControladorDepartamento
 from controlador.controlador_emprestimo import ControladorEmprestimo
 from controlador.controlador_funcionario import ControladorFuncionario
 from limite.limite_sistema import LimiteSistema
@@ -9,7 +8,6 @@ class ControladorSistema:
     def __init__(self):
         self.__controlador_funcionario = ControladorFuncionario(self)
         self.__controlador_emprestimo = ControladorEmprestimo(self)
-        self.__controlador_departamento = ControladorDepartamento(self)
         self.__controlador_computadores = ControladorComputadores(self)
         self.__limite = LimiteSistema()
 
@@ -19,7 +17,6 @@ class ControladorSistema:
             1: self.dispositivos,
             2: self.emprestimos,
             3: self.funcionarios,
-            4: self.departamentos,
         }
 
         while True:
