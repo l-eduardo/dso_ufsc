@@ -1,8 +1,9 @@
+from validacao.validador_cpf import ValidadorCPF
 
 
 class Funcionario:
     def __init__ (self, cpf: str, nome: str, email: str, telefone: str,cargo: str, endereco: str):
-        # Controladora do sistema - valida dados
+        ValidadorCPF(cpf = cpf).valida_cpf()
         self.__cpf = cpf
         self.__nome = nome
         self.__email = email

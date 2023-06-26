@@ -1,6 +1,7 @@
 import datetime
 from modelo.abs.dispositivo import Dispositivo
 from validacao.validador_dispositivos import ValidadorDispositivo
+from validacao.validador_data import ValidadorData
 
 
 class Computador(Dispositivo, ValidadorDispositivo):
@@ -17,6 +18,7 @@ class Computador(Dispositivo, ValidadorDispositivo):
                  fim_garantia: str
                  ):
         super().__init__(patrimonio, marca, modelo, tipo, serial_number)
+        ValidadorData.verificar_data(fim_garantia)
         self.__processador = processador
         self.__memoria_ram = memoria_ram
         self.__armazenamento = armazenamento

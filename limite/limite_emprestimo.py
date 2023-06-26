@@ -14,10 +14,21 @@ class LimiteEmprestimo(LimitePSG):
                         nome_objeto = "Emprestimo")
 
     def tela_cria_edita(self, funcionarios: list, dispositivos: list):
+        print(dispositivos)
         layout = [[sg.Text("Dispositivo")],
-                  [sg.Combo([f"{dispositivo.patrimonio} - {dispositivo.modelo}" for dispositivo in dispositivos], key="patrimonio", expand_x=True)],
+                  [sg.Combo(values=[f"{dispositivo.patrimonio} - {dispositivo.modelo}" 
+                                    for dispositivo in dispositivos],
+                            default_value=f"{dispositivos[0].patrimonio} - {dispositivos[0].modelo}",
+                            key="patrimonio",
+                            expand_x=True,
+                            readonly=True)],
                   [sg.Text("Funcionario")],
-                  [sg.Combo([f"{funcionario.cpf} - {funcionario.nome}" for funcionario in funcionarios], key="cpf", expand_x=True)]]
+                  [sg.Combo(values=[f"{funcionario.cpf} - {funcionario.nome}"
+                                    for funcionario in funcionarios],
+                            default_value=f"{funcionarios[0].cpf} - {funcionarios[0].nome}",
+                             key="cpf",
+                             expand_x=True,
+                             readonly=True)]]
         layout.append([sg.Button('Salvar'), sg.Button('Cancelar')])
         window = sg.Window(f'Emprestimo', layout)
 
